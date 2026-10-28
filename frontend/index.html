@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de gerenciamento de livraria com catálogo de livros e autores.">
+    <title>📚 Livraria — Gerenciamento de Acervo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- ─── SIDEBAR ─── -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <span class="brand-icon">📚</span>
+            <span class="brand-text">Livraria</span>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-btn active" data-view="dashboard" id="nav-dashboard">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                <span>Dashboard</span>
+            </button>
+            <button class="nav-btn" data-view="livros" id="nav-livros">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <span>Livros</span>
+            </button>
+            <button class="nav-btn" data-view="autores" id="nav-autores">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Autores</span>
+            </button>
+        </nav>
+        <div class="sidebar-footer">
+            <span class="version-badge">v1.0</span>
+        </div>
+    </aside>
+
+    <!-- ─── MAIN CONTENT ─── -->
+    <main class="main-content" id="main-content">
+
+        <!-- ─── HEADER ─── -->
+        <header class="top-bar">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="search-wrapper" id="search-wrapper" style="display:none;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" class="search-input" id="search-input" placeholder="Buscar livros ou autores…">
+            </div>
+            <h1 class="page-title" id="page-title">Dashboard</h1>
+        </header>
+
+        <!-- ─── DASHBOARD VIEW ─── -->
+        <section class="view active" id="view-dashboard">
+            <div class="stats-grid" id="stats-grid">
+                <div class="stat-card" id="stat-livros">
+                    <div class="stat-icon stat-icon--books">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-total-livros">—</span>
+                        <span class="stat-label">Livros</span>
+                    </div>
+                </div>
+                <div class="stat-card" id="stat-autores">
+                    <div class="stat-icon stat-icon--authors">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-total-autores">—</span>
+                        <span class="stat-label">Autores</span>
+                    </div>
+                </div>
+                <div class="stat-card" id="stat-estoque">
+                    <div class="stat-icon stat-icon--stock">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-total-unidades">—</span>
+                        <span class="stat-label">Unidades em estoque</span>
+                    </div>
+                </div>
+                <div class="stat-card" id="stat-valor">
+                    <div class="stat-icon stat-icon--value">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-valor-total">—</span>
+                        <span class="stat-label">Valor em estoque</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-section">
+                <h2 class="section-title">Livros Recentes</h2>
+                <div class="table-wrapper">
+                    <table class="data-table" id="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Autor</th>
+                                <th>Ano</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── LIVROS VIEW ─── -->
+        <section class="view" id="view-livros">
+            <div class="view-header">
+                <h2 class="section-title">Catálogo de Livros</h2>
+                <button class="btn btn--primary" id="btn-add-livro">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Novo Livro
+                </button>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table" id="livros-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Ano</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="livros-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ─── AUTORES VIEW ─── -->
+        <section class="view" id="view-autores">
+            <div class="view-header">
+                <h2 class="section-title">Autores Cadastrados</h2>
+                <button class="btn btn--primary" id="btn-add-autor">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Novo Autor
+                </button>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table" id="autores-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Nacionalidade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="autores-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- ─── MODAL ─── -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Título</h3>
+                <button class="modal-close" id="modal-close" aria-label="Fechar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <form class="modal-body" id="modal-form"></form>
+            <div class="modal-footer">
+                <button class="btn btn--ghost" id="modal-cancel" type="button">Cancelar</button>
+                <button class="btn btn--primary" id="modal-submit" type="button">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── TOAST ─── -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
